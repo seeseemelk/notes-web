@@ -1,0 +1,41 @@
+body {
+    background-color: #e7f8ff;
+    font-family: monospace;
+}
+
+.content {
+    margin: 1em 2em;
+}
+
+.content-title {
+    background-color: #6ac2ff;
+    padding: 0.2em 0.8em;
+    border: 1px solid black;
+    margin-bottom: 0;
+    font-size: medium;
+}
+
+.content-body {
+    background-color: #b3e7ff;
+    margin-top: 0;
+    padding: 0.6em 0.8em;
+    border: 1px solid black;
+    border-top: 0;
+    font-size: medium;
+}
+
+.content-actions {
+    border-top: 1px dashed black;
+    background-color: #cee9fa;
+    margin: 0.6em -0.8em -0.6em;
+    padding: 0.3em 0.8em;
+}
+
+ul {
+    margin: 0;
+    padding-left: 1.5em;
+}
+
+textarea {
+    width: 100%;
+}

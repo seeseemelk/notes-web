@@ -1,0 +1,23 @@
+{#include base}
+    {#title}Create new Todo item{/}
+    {#include section}
+        {#title}Create Item{/}
+        {#content}
+            <form method="post" action="/create">
+                <label for="title">Title:</label>
+                <input id="title" type="text" placeholder="Title" name="title">
+                <br>
+                <label for="description">Description:</label>
+                <br>
+                <textarea id="description" placeholder="Example description..." rows="10" name="content">{#if item != null}{item.content}{/}</textarea>
+                <br>
+                <input type="submit" value="Create">
+            </form>
+        {/}
+        <div class="content-actions">
+            <ul>
+                <li>Delete</li>
+            </ul>
+        </div>
+    {/}
+{/}
