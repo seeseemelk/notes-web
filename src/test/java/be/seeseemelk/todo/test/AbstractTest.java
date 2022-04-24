@@ -6,10 +6,13 @@ import io.smallrye.mutiny.Uni;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public abstract class AbstractTest
 {
+	public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
 	public static final TodoItem BASE_ITEM_1 = TodoItem.builder()
 		.title("Title 1")
 		.content("Content 1")
@@ -39,5 +42,10 @@ public abstract class AbstractTest
 	public static <T> T await(Uni<T> uni)
 	{
 		return uni.await().atMost(Duration.ofSeconds(10L));
+	}
+
+	public static String toString(LocalDateTime dateTime)
+	{
+		return dateTime.format(DATE_TIME_FORMAT);
 	}
 }

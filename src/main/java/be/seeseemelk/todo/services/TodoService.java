@@ -34,9 +34,13 @@ public class TodoService
 			.persistAndFlush(item);
 	}
 
-	public Uni<Boolean> deleteItem(long id)
+	public Uni<Void> deleteItem(long id)
 	{
 		return repository
-			.deleteById(id);
+			.deleteById(id)
+			.map(bool -> bool ? bool : null)
+			.onItem().ifNull().failWith(NotFoundException::new)
+			.onItem().ifNotNull().transformToUni(bool -> repository.flush())
+			.replaceWithVoid();
 	}
 }

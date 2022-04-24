@@ -5,10 +5,13 @@ import be.seeseemelk.todo.dto.ListItemsResponse;
 import be.seeseemelk.todo.model.TodoItem;
 import be.seeseemelk.todo.services.TodoService;
 import io.smallrye.mutiny.Uni;
+import org.apache.http.HttpStatus;
+import org.jboss.resteasy.reactive.ResponseStatus;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
 
 @Path("/api/v1/todos")
@@ -32,8 +35,7 @@ public class TodoController
 	@Path("/{id}")
 	public Uni<TodoItem> getItem(@PathParam("id") long id)
 	{
-		return todos
-			.getItem(id);
+		return todos.getItem(id);
 	}
 	
 	@POST
@@ -46,5 +48,13 @@ public class TodoController
 			.title(request.getTitle())
 			.build();
 		return todos.createItem(item);
+	}
+
+	@DELETE
+	@Path("/{id}")
+	public Uni<Response> deleteItem(@PathParam("id") long id)
+	{
+		return todos.deleteItem(id)
+			.replaceWith(() -> Response.noContent().build());
 	}
 }

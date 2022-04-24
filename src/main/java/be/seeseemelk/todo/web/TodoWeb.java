@@ -19,7 +19,7 @@ import java.util.List;
 public class TodoWeb
 {
 	@Inject
-	private TodoService todos;
+	TodoService todos;
 
 	@CheckedTemplate
 	public static class Template
@@ -54,6 +54,15 @@ public class TodoWeb
 	public TemplateInstance create()
 	{
 		return Template.edit(Uni.createFrom().nullItem());
+	}
+
+	@GET
+	@Path("/delete/{id}")
+	@Produces(MediaType.TEXT_HTML)
+	public Uni<TemplateInstance> delete(@PathParam("id") long id)
+	{
+		return todos.deleteItem(id)
+			.onItem().transform(unused -> index());
 	}
 
 	@POST

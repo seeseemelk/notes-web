@@ -60,7 +60,7 @@ public class TodoControllerTest extends AbstractTest
 				.body("items[0].id", equalTo((int) EXAMPLE_ITEM_1.getId()))
 				.body("items[0].title", equalTo(EXAMPLE_ITEM_1.getTitle()))
 				.body("items[0].content", equalTo(EXAMPLE_ITEM_1.getContent()))
-				.body("items[0].creationDate", equalTo(EXAMPLE_ITEM_1.getCreationDate().toString()));
+				.body("items[0].creationDate", equalTo(toString(EXAMPLE_ITEM_1.getCreationDate())));
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class TodoControllerTest extends AbstractTest
 				.body("id", equalTo((int) EXAMPLE_ITEM_2.getId()))
 				.body("title", equalTo(EXAMPLE_ITEM_2.getTitle()))
 				.body("content", equalTo(EXAMPLE_ITEM_2.getContent()))
-				.body("creationDate", equalTo(EXAMPLE_ITEM_2.getCreationDate().toString()));
+				.body("creationDate", equalTo(toString(EXAMPLE_ITEM_2.getCreationDate())));
 	}
 
 	@Test
