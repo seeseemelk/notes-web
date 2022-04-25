@@ -17,8 +17,7 @@ public class TodoService
 
 	public Uni<List<TodoItem>> getAllItems()
 	{
-		return repository
-			.findAllSortedByOrder();
+		return repository.findAllSortedByOrder();
 	}
 
 	public Uni<TodoItem> getItem(long id)
@@ -30,8 +29,12 @@ public class TodoService
 
 	public Uni<TodoItem> createItem(TodoItem item)
 	{
-		return repository
-			.persistAndFlush(item);
+		return repository.persistAndFlush(item);
+	}
+
+	public Uni<TodoItem> updateItem(TodoItem item)
+	{
+		return repository.persistAndFlush(item);
 	}
 
 	public Uni<Void> deleteItem(long id)

@@ -1,5 +1,6 @@
 package be.seeseemelk.todo.web;
 
+import be.seeseemelk.todo.dto.CreateItemRequest;
 import be.seeseemelk.todo.model.TodoItem;
 import be.seeseemelk.todo.services.TodoService;
 import io.quarkus.qute.CheckedTemplate;
@@ -96,9 +97,10 @@ public class TodoWeb
 		return Template.edit(todos.getItem(id));
 	}
 
-	/*@PUT
+	@PUT
 	@Path("/edit/{id}")
 	public void edit(@PathParam("id") long id, CreateItemRequest request)
 	{
-	}*/
+
+	}
 }
