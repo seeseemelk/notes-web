@@ -95,4 +95,10 @@ public class TodoWeb
 	{
 		return Template.edit(todos.getItem(id));
 	}
+
+	/*@PUT
+	@Path("/edit/{id}")
+	public void edit(@PathParam("id") long id, CreateItemRequest request)
+	{
+	}*/
 }

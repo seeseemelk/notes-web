@@ -1,15 +1,29 @@
 package be.seeseemelk.todo.services;
 
+import io.quarkus.arc.Arc;
+import io.quarkus.arc.InstanceHandle;
+import io.quarkus.flyway.runtime.FlywayContainer;
+import io.quarkus.flyway.runtime.FlywayContainerProducer;
+import io.quarkus.flyway.runtime.QuarkusPathLocationScanner;
 import io.quarkus.runtime.StartupEvent;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.flywaydb.core.Flyway;
+import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class TodoMigrationService
 {
+	@Inject
+	Logger logger;
+
 	@ConfigProperty(name = "quarkus.datasource.reactive.url")
 	String datasourceUrl;
 
@@ -19,12 +33,25 @@ public class TodoMigrationService
 	@ConfigProperty(name = "quarkus.datasource.password")
 	String datasourcePassword;
 
-	public void runFlywayMigration(@Observes StartupEvent event)
+	@ConfigProperty(name = "todo.migration.files")
+	List<String> files;
+
+	public void runFlywayMigration(@Observes StartupEvent event) throws IOException
 	{
-		Flyway.configure()
+		logger.info("Initialising flyway...");
+		QuarkusPathLocationScanner.setApplicationMigrationFiles(files.stream()
+			.map(file -> "db/migration/" + file)
+			.collect(Collectors.toList()));
+		DataSource datasource = Flyway.configure()
 			.dataSource(getDatasourceUrl(), datasourceUsername, datasourcePassword)
-			.load()
-			.migrate();
+			.getDataSource();
+		try (InstanceHandle<FlywayContainerProducer> instance = Arc.container().instance(FlywayContainerProducer.class))
+		{
+			FlywayContainerProducer flywayProducer = instance.get();
+			FlywayContainer flywayContainer = flywayProducer.createFlyway(datasource, "<default>", true, true);
+			Flyway flyway = flywayContainer.getFlyway();
+			flyway.migrate();
+		}
 	}
 
 	private String getDatasourceUrl()
