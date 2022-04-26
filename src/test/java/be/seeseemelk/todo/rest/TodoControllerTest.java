@@ -1,6 +1,5 @@
 package be.seeseemelk.todo.rest;
 
-import be.seeseemelk.todo.model.TodoItem;
 import be.seeseemelk.todo.services.TodoService;
 import be.seeseemelk.todo.test.AbstractTest;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
@@ -8,7 +7,6 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.smallrye.mutiny.Uni;
 import org.apache.http.HttpStatus;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

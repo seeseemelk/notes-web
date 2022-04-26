@@ -5,8 +5,6 @@ import be.seeseemelk.todo.dto.ListItemsResponse;
 import be.seeseemelk.todo.model.TodoItem;
 import be.seeseemelk.todo.services.TodoService;
 import io.smallrye.mutiny.Uni;
-import org.apache.http.HttpStatus;
-import org.jboss.resteasy.reactive.ResponseStatus;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

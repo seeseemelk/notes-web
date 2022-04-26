@@ -1,6 +1,5 @@
 package be.seeseemelk.todo.web;
 
-import be.seeseemelk.todo.dto.CreateItemRequest;
 import be.seeseemelk.todo.model.TodoItem;
 import be.seeseemelk.todo.services.TodoService;
 import io.quarkus.qute.CheckedTemplate;
@@ -17,6 +16,8 @@ import java.util.Collections;
 import java.util.List;
 
 @Path("")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+@Produces(MediaType.TEXT_HTML)
 public class TodoWeb
 {
 	@Inject
@@ -31,7 +32,6 @@ public class TodoWeb
 
 	@GET
 	@Path("/")
-	@Produces(MediaType.TEXT_HTML)
 	public TemplateInstance index()
 	{
 		return Template.view(todos.getAllItems());
@@ -39,7 +39,6 @@ public class TodoWeb
 
 	@GET
 	@Path("/view/{id}")
-	@Produces(MediaType.TEXT_HTML)
 	public TemplateInstance view(@PathParam("id") long id)
 	{
 		return Template.view(
@@ -51,7 +50,6 @@ public class TodoWeb
 
 	@GET
 	@Path("/create")
-	@Produces(MediaType.TEXT_HTML)
 	public TemplateInstance create()
 	{
 		return Template.edit(Uni.createFrom().nullItem());
@@ -59,17 +57,14 @@ public class TodoWeb
 
 	@GET
 	@Path("/delete/{id}")
-	@Produces(MediaType.TEXT_HTML)
-	public Uni<TemplateInstance> delete(@PathParam("id") long id)
+	public Uni<Response> delete(@PathParam("id") long id)
 	{
 		return todos.deleteItem(id)
-			.onItem().transform(unused -> index());
+			.map(unused -> Response.seeOther(URI.create("/view")).build());
 	}
 
 	@POST
 	@Path("/create")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.TEXT_HTML)
 	public Uni<Response> create(
 		@FormParam("title") String title,
 		@FormParam("content") String content
@@ -84,23 +79,32 @@ public class TodoWeb
 		return savedItem
 			.map(TodoItem::getId)
 			.map(id -> Response
-				.created(URI.create("/view/" + id))
-				.entity(view(id))
+				.seeOther(URI.create("/view/" + id))
 				.build());
 	}
 
 	@GET
 	@Path("/edit/{id}")
-	@Produces(MediaType.TEXT_HTML)
 	public TemplateInstance edit(@PathParam("id") long id)
 	{
 		return Template.edit(todos.getItem(id));
 	}
 
-	@PUT
+	@POST
 	@Path("/edit/{id}")
-	public void edit(@PathParam("id") long id, CreateItemRequest request)
+	public Uni<Response> edit(
+		@PathParam("id") long id,
+		@FormParam("title") String title,
+		@FormParam("content") String content
+	)
 	{
-
+		return todos.getItem(id)
+			.map(item -> {
+				item.setTitle(title);
+				item.setContent(content);
+				return item;
+			})
+			.flatMap(todos::updateItem)
+			.map(item -> Response.seeOther(URI.create("/view/" + item.getId())).build());
 	}
 }

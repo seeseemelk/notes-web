@@ -5,7 +5,7 @@
         {#content}
             <form
                     {#if item == null}method="post" action="/create"{/}
-                    {#if item != null}method="put" action="/edit/{item.id}"{/}
+                    {#if item != null}method="post" action="/edit/{item.id}"{/}
             >
                 <label for="title">Title:</label>
                 <input id="title" type="text" placeholder="Title" name="title" {#if item != null}value="{item.title}"{/}>

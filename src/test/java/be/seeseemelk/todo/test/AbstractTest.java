@@ -1,7 +1,6 @@
 package be.seeseemelk.todo.test;
 
 import be.seeseemelk.todo.model.TodoItem;
-import io.quarkus.test.junit.QuarkusTest;
 import io.smallrye.mutiny.Uni;
 
 import java.time.Duration;
