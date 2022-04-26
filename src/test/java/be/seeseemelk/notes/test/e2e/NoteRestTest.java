@@ -1,6 +1,6 @@
-package be.seeseemelk.todo.test.e2e;
+package be.seeseemelk.notes.test.e2e;
 
-import be.seeseemelk.todo.model.TodoItem;
+import be.seeseemelk.notes.model.Note;
 import io.quarkus.test.junit.QuarkusTest;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class TodoRestTest extends AbstractE2eTest
+public class NoteRestTest extends AbstractE2eTest
 {
 	@Test
-	void testItemDoesNotExist()
+	void testNoteDoesNotExist()
 	{
 		given()
 			.when()
@@ -21,25 +21,25 @@ public class TodoRestTest extends AbstractE2eTest
 	}
 
 	@Test
-	void testItemCanBeDeleted()
+	void testNoteCanBeDeleted()
 	{
-		TodoItem item = createItem();
+		Note note = createNote();
 
 		given()
 			.when()
-				.get("/{id}", item.getId())
+				.get("/{id}", note.getId())
 			.then()
 				.statusCode(HttpStatus.SC_OK);
 
 		given()
 			.when()
-				.delete("/{id}", item.getId())
+				.delete("/{id}", note.getId())
 			.then()
 				.statusCode(HttpStatus.SC_NO_CONTENT);
 
 		given()
 			.when()
-				.get("/{id}", item.getId())
+				.get("/{id}", note.getId())
 			.then()
 				.statusCode(HttpStatus.SC_NOT_FOUND);
 	}

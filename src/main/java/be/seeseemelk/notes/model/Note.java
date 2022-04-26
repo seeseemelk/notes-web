@@ -1,4 +1,4 @@
-package be.seeseemelk.todo.model;
+package be.seeseemelk.notes.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @Entity
 @NoArgsConstructor
-public class TodoItem
+public class Note
 {
 	@Id
 	@GeneratedValue

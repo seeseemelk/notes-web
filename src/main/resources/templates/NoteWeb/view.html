@@ -1,0 +1,18 @@
+{#include base}
+    {#title}Notes{/}
+    {#for note in notes}
+        {#include section}
+            {#title}{note.title} (Created {note.creationDate}){/}
+            {#content}
+                {note.content}
+                <div class="content-actions">
+                    <a href="/view/{note.id}">Permalink</a>
+                    <span> - </span>
+                    <a href="/edit/{note.id}">Edit</a>
+                    <span> - </span>
+                    <a href="/delete/{note.id}">Delete</a>
+                </div>
+            {/}
+        {/}
+    {/}
+{/}

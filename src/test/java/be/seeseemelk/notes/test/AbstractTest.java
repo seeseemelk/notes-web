@@ -1,6 +1,6 @@
-package be.seeseemelk.todo.test;
+package be.seeseemelk.notes.test;
 
-import be.seeseemelk.todo.model.TodoItem;
+import be.seeseemelk.notes.model.Note;
 import io.smallrye.mutiny.Uni;
 
 import java.time.Duration;
@@ -12,30 +12,30 @@ public abstract class AbstractTest
 {
 	public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
-	public static final TodoItem BASE_ITEM_1 = TodoItem.builder()
+	public static final Note BASE_NOTE_1 = Note.builder()
 		.title("Title 1")
 		.content("Content 1")
 		.creationDate(LocalDateTime.now())
 		.build();
 
-	public static final TodoItem BASE_ITEM_2 = TodoItem.builder()
+	public static final Note BASE_NOTE_2 = Note.builder()
 		.title("Title 2")
 		.content("Content 2")
 		.creationDate(LocalDateTime.now())
 		.build();
 
-	public static final TodoItem EXAMPLE_ITEM_1 = TodoItem.builder()
+	public static final Note EXAMPLE_NOTE_1 = Note.builder()
 		.id(1L)
-		.title(BASE_ITEM_1.getTitle())
-		.content(BASE_ITEM_1.getContent())
-		.creationDate(BASE_ITEM_1.getCreationDate())
+		.title(BASE_NOTE_1.getTitle())
+		.content(BASE_NOTE_1.getContent())
+		.creationDate(BASE_NOTE_1.getCreationDate())
 		.build();
 
-	public static final TodoItem EXAMPLE_ITEM_2 = TodoItem.builder()
+	public static final Note EXAMPLE_NOTE_2 = Note.builder()
 		.id(2L)
-		.title(BASE_ITEM_2.getTitle())
-		.content(BASE_ITEM_2.getContent())
-		.creationDate(BASE_ITEM_2.getCreationDate())
+		.title(BASE_NOTE_2.getTitle())
+		.content(BASE_NOTE_2.getContent())
+		.creationDate(BASE_NOTE_2.getCreationDate())
 		.build();
 
 	public static <T> T await(Uni<T> uni)

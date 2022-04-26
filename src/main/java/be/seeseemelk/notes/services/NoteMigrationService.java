@@ -1,4 +1,4 @@
-package be.seeseemelk.todo.services;
+package be.seeseemelk.notes.services;
 
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.InstanceHandle;
@@ -14,12 +14,11 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
-public class TodoMigrationService
+public class NoteMigrationService
 {
 	@Inject
 	Logger logger;
@@ -36,7 +35,7 @@ public class TodoMigrationService
 	@ConfigProperty(name = "todo.migration.files")
 	List<String> files;
 
-	public void runFlywayMigration(@Observes StartupEvent event) throws IOException
+	public void runFlywayMigration(@Observes StartupEvent event)
 	{
 		logger.info("Initialising flyway...");
 		QuarkusPathLocationScanner.setApplicationMigrationFiles(files.stream()

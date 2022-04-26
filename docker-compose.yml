@@ -4,8 +4,8 @@ services:
   db:
     image: postgres:14-alpine
     environment:
-      - POSTGRES_PASSWORD=todos
-      - POSTGRES_USER=todos
-      - POSTGRES_DB=todos
+      - POSTGRES_PASSWORD=notes
+      - POSTGRES_USER=notes
+      - POSTGRES_DB=notes
     ports:
       - 5432:5432

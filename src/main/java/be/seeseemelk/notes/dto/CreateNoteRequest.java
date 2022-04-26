@@ -1,21 +1,16 @@
-package be.seeseemelk.todo.dto;
+package be.seeseemelk.notes.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.ws.rs.FormParam;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateItemRequest
+public class CreateNoteRequest
 {
-	@FormParam("title")
 	private String title;
-
-	@FormParam("content")
-	private String description;
+	private String content;
 }

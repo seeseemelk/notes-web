@@ -1,7 +1,7 @@
-package be.seeseemelk.todo.services;
+package be.seeseemelk.notes.services;
 
-import be.seeseemelk.todo.model.TodoItem;
-import be.seeseemelk.todo.repositories.TodoRepository;
+import be.seeseemelk.notes.model.Note;
+import be.seeseemelk.notes.repositories.NoteRepository;
 import io.smallrye.mutiny.Uni;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,34 +10,34 @@ import javax.ws.rs.NotFoundException;
 import java.util.List;
 
 @ApplicationScoped
-public class TodoService
+public class NoteService
 {
 	@Inject
-	TodoRepository repository;
+	NoteRepository repository;
 
-	public Uni<List<TodoItem>> getAllItems()
+	public Uni<List<Note>> getAllNotes()
 	{
 		return repository.findAllSortedByOrder();
 	}
 
-	public Uni<TodoItem> getItem(long id)
+	public Uni<Note> getNote(long id)
 	{
 		return repository
 			.findById(id)
 			.onItem().ifNull().failWith(NotFoundException::new);
 	}
 
-	public Uni<TodoItem> createItem(TodoItem item)
+	public Uni<Note> createNote(Note note)
 	{
-		return repository.persistAndFlush(item);
+		return repository.persistAndFlush(note);
 	}
 
-	public Uni<TodoItem> updateItem(TodoItem item)
+	public Uni<Note> updateNote(Note note)
 	{
-		return repository.persistAndFlush(item);
+		return repository.persistAndFlush(note);
 	}
 
-	public Uni<Void> deleteItem(long id)
+	public Uni<Void> deleteNote(long id)
 	{
 		return repository
 			.deleteById(id)

@@ -1,0 +1,27 @@
+{#include base}
+    {#title}Create new note{/}
+    {#include section}
+        {#title}Create note{/}
+        {#content}
+            <form
+                    {#if note == null}method="post" action="/create"{/}
+                    {#if note != null}method="post" action="/edit/{note.id}"{/}
+            >
+                <label for="title">Title:</label>
+                <input id="title" type="text" placeholder="Title" name="title" {#if note != null}value="{note.title}"{/}>
+                <br>
+                <label for="description">Description:</label>
+                <br>
+                <textarea id="description" placeholder="Example description..." rows="10" name="content">{#if note != null}{note.content}{/}</textarea>
+                <br>
+                {#if note == null}<input type="submit" value="Create">{/}
+                {#if note != null}<input type="submit" value="Edit">{/}
+            </form>
+        {/}
+        <div class="content-actions">
+            <ul>
+                <li>Delete</li>
+            </ul>
+        </div>
+    {/}
+{/}

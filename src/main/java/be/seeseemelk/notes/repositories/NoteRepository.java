@@ -1,6 +1,6 @@
-package be.seeseemelk.todo.repositories;
+package be.seeseemelk.notes.repositories;
 
-import be.seeseemelk.todo.model.TodoItem;
+import be.seeseemelk.notes.model.Note;
 import io.quarkus.hibernate.reactive.panache.PanacheRepository;
 import io.smallrye.mutiny.Uni;
 
@@ -8,9 +8,9 @@ import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
 
 @ApplicationScoped
-public class TodoRepository implements PanacheRepository<TodoItem>
+public class NoteRepository implements PanacheRepository<Note>
 {
-	public Uni<List<TodoItem>> findAllSortedByOrder()
+	public Uni<List<Note>> findAllSortedByOrder()
 	{
 		return findAll().list();
 	}

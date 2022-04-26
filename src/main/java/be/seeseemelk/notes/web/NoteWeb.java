@@ -1,7 +1,7 @@
-package be.seeseemelk.todo.web;
+package be.seeseemelk.notes.web;
 
-import be.seeseemelk.todo.model.TodoItem;
-import be.seeseemelk.todo.services.TodoService;
+import be.seeseemelk.notes.model.Note;
+import be.seeseemelk.notes.services.NoteService;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
 import io.smallrye.mutiny.Uni;
@@ -18,23 +18,23 @@ import java.util.List;
 @Path("")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 @Produces(MediaType.TEXT_HTML)
-public class TodoWeb
+public class NoteWeb
 {
 	@Inject
-	TodoService todos;
+	NoteService notes;
 
 	@CheckedTemplate
 	public static class Template
 	{
-		public static native TemplateInstance view(Uni<List<TodoItem>> items);
-		public static native TemplateInstance edit(Uni<TodoItem> item);
+		public static native TemplateInstance view(Uni<List<Note>> notes);
+		public static native TemplateInstance edit(Uni<Note> note);
 	}
 
 	@GET
 	@Path("/")
 	public TemplateInstance index()
 	{
-		return Template.view(todos.getAllItems());
+		return Template.view(notes.getAllNotes());
 	}
 
 	@GET
@@ -42,8 +42,8 @@ public class TodoWeb
 	public TemplateInstance view(@PathParam("id") long id)
 	{
 		return Template.view(
-			todos
-			.getItem(id)
+			notes
+			.getNote(id)
 			.map(Collections::singletonList)
 		);
 	}
@@ -59,7 +59,7 @@ public class TodoWeb
 	@Path("/delete/{id}")
 	public Uni<Response> delete(@PathParam("id") long id)
 	{
-		return todos.deleteItem(id)
+		return notes.deleteNote(id)
 			.map(unused -> Response.seeOther(URI.create("/view")).build());
 	}
 
@@ -70,14 +70,14 @@ public class TodoWeb
 		@FormParam("content") String content
 	)
 	{
-		TodoItem newItem = TodoItem.builder()
+		Note newItem = Note.builder()
 			.creationDate(LocalDateTime.now())
 			.title(title)
 			.content(content)
 			.build();
-		Uni<TodoItem> savedItem = todos.createItem(newItem);
+		Uni<Note> savedItem = notes.createNote(newItem);
 		return savedItem
-			.map(TodoItem::getId)
+			.map(Note::getId)
 			.map(id -> Response
 				.seeOther(URI.create("/view/" + id))
 				.build());
@@ -87,7 +87,7 @@ public class TodoWeb
 	@Path("/edit/{id}")
 	public TemplateInstance edit(@PathParam("id") long id)
 	{
-		return Template.edit(todos.getItem(id));
+		return Template.edit(notes.getNote(id));
 	}
 
 	@POST
@@ -98,13 +98,13 @@ public class TodoWeb
 		@FormParam("content") String content
 	)
 	{
-		return todos.getItem(id)
+		return notes.getNote(id)
 			.map(item -> {
 				item.setTitle(title);
 				item.setContent(content);
 				return item;
 			})
-			.flatMap(todos::updateItem)
+			.flatMap(notes::updateNote)
 			.map(item -> Response.seeOther(URI.create("/view/" + item.getId())).build());
 	}
 }
