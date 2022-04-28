@@ -35,4 +35,4 @@ jobs:
     - name: Build native
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
-        arguments: build -Dquarkus.package.type=native
+        arguments: quarkusBuild -Dquarkus.package.type=native -Dquarkus.native.container-build=true
