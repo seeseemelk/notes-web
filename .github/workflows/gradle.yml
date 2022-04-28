@@ -21,7 +21,7 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: alpine_latest
 
     steps:
     - uses: actions/checkout@v3
