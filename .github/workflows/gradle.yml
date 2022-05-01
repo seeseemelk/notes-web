@@ -35,19 +35,19 @@ jobs:
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
         arguments: build -Dquarkus.package.type=uber-jar
-    - name: Upload uber jar
-      uses: actions/upload-artifact@v3.0.0
-      with:
-        name: notes.jar
-        path: build/notes-web-*-runner.jar
+#    - name: Upload uber jar
+#      uses: actions/upload-artifact@v3.0.0
+#      with:
+#        name: notes.jar
+#        path: build/notes-web-*-runner.jar
         
     - name: Build native
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
         arguments: quarkusBuild -Dquarkus.package.type=native -Dquarkus.native.container-build=true
-    - name: Upload native executable
-      uses: actions/upload-artifact@v3.0.0
-      with:
-        name: notes
-        path: build/notes-web-*-runner
+#    - name: Upload native executable
+#      uses: actions/upload-artifact@v3.0.0
+#      with:
+#         name: notes
+#         path: build/notes-web-*-runner
         
