@@ -1,4 +1,4 @@
-image: container-registry.oracle.com/graalvm/native-image:java11
+image: container-registry.oracle.com/graalvm/native-image:ol8-java11
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
