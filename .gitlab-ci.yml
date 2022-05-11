@@ -3,7 +3,7 @@ image: registry.gitlab.com/seeseemelk/baseimages/quarkus:latest
 stages:
   - build
   - test
-  - deploy
+  - upload
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
