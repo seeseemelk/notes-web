@@ -1,5 +1,10 @@
 image: registry.gitlab.com/seeseemelk/baseimages/quarkus:latest
 
+stages:
+  - build
+  - test
+  - deploy
+
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
@@ -38,3 +43,15 @@ test:
     paths:
       - build
       - .gradle
+
+deploy:
+  stage: upload
+  script:
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file buildnotes-web-SNAPSHOT "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/notes-web/SNAPSHOT/notes-web"'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
