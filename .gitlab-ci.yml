@@ -1,4 +1,4 @@
-image: ghcr.io/graalvm/jdk:20.3.6
+image: container-registry.oracle.com/graalvm/native-image:java11
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
