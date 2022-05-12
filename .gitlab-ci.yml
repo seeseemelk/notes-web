@@ -14,6 +14,7 @@ before_script:
 
 build:
   stage: build
+  interruptible: true
   script: ./gradlew --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
@@ -24,6 +25,9 @@ build:
 
 build-native:
   stage: build
+  interruptible: true
+  only:
+    - main
   tags:
       - arm64
   script: ./gradlew --build-cache quarkusBuild -Dquarkus.package.type=native
@@ -36,6 +40,7 @@ build-native:
 
 test:
   stage: test
+  interruptible: true
   script: ./gradlew check
   cache:
     key: "$CI_COMMIT_REF_NAME"
@@ -46,6 +51,8 @@ test:
 
 deploy:
   stage: upload
+  only:
+    - main
   script:
     - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file buildnotes-web-SNAPSHOT "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/notes-web/SNAPSHOT/notes-web"'
   cache:
