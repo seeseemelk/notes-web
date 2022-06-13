@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            ./gradlew test --stacktrace
+            ./gradlew --console=plain test --stacktrace
 
       - save_cache:
           paths:
@@ -37,11 +37,11 @@ jobs:
       - run:
           name: Assemble Jar
           command: |
-            ./gradlew assemble
+            ./gradlew --console=plain assemble
       - run:
           name: Assemble native Jar
           command: |
-            ./gradlew build -Dquarkus.package.type=native
+            ./gradlew --console=plain build -Dquarkus.package.type=native
       - store_artifacts:
           path: build/libs
 workflows:
