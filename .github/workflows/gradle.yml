@@ -14,7 +14,7 @@ permissions:
 jobs:
   build:
     runs-on: self-hosted
-    container: cimg/openjdk:17.0
+    container: openjdk:11-jdk-slim
 
     steps:
     - uses: actions/checkout@v3
