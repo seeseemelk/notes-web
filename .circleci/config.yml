@@ -2,6 +2,7 @@ version: 2
 jobs:
   build:
     parallelism: 2
+    resource_class: arm.medium
     environment:
       _JAVA_OPTIONS: "-Xmx3g"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
@@ -14,10 +15,12 @@ jobs:
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - restore_cache:
           key: v1-gradle-cache-{{ checksum "build.gradle" }}
+
       - run:
-          name: Run tests in parallel
+          name: Run tests
           command: |
             ./gradlew test
+
       - save_cache:
           paths:
             - ~/.gradle/wrapper
@@ -26,6 +29,7 @@ jobs:
           paths:
             - ~/.gradle/caches
           key: v1-gradle-cache-{{ checksum "build.gradle" }}
+
       - store_test_results:
           path: build/test-results/test
       - store_artifacts:
