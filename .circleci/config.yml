@@ -8,8 +8,6 @@ jobs:
       _JAVA_OPTIONS: "-Xmx3g"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
 
-    docker:
-      - image: cimg/openjdk:17.0.1
     steps:
       - checkout
       - restore_cache:
@@ -20,7 +18,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            ./gradlew test
+            ./gradlew test --stacktrace
 
       - save_cache:
           paths:
