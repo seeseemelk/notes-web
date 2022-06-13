@@ -35,9 +35,13 @@ jobs:
       - store_artifacts:
           path: build/test-results/test
       - run:
-          name: Assemble JAR
+          name: Assemble Jar
           command: |
             ./gradlew assemble
+      - run:
+          name: Assemble native Jar
+          command: |
+            ./gradlew build -Dquarkus.package.type=native
       - store_artifacts:
           path: build/libs
 workflows:
