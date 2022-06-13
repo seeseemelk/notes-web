@@ -2,8 +2,9 @@ version: 2
 jobs:
   build:
     machine:
-      image: arm-default
+      image: ubuntu-2004:current
     resource_class: arm.medium
+
     environment:
       _JAVA_OPTIONS: "-Xmx3g"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
