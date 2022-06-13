@@ -1,7 +1,8 @@
 version: 2
 jobs:
   build:
-    parallelism: 2
+    machine:
+      image: arm-default
     resource_class: arm.medium
     environment:
       _JAVA_OPTIONS: "-Xmx3g"
