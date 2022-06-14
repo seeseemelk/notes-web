@@ -50,14 +50,12 @@ jobs:
           name: Assemble Jar
           command: |
             ./gradlew --console=plain assemble
-      - store_artifacts:
-          path: build/libs
       - run:
           name: Assemble native Jar
           command: |
             ./gradlew --console=plain build -Dquarkus.package.type=native
       - store_artifacts:
-          path: build/quarkus-app
+          path: build/
 
 workflows:
   version: 2
