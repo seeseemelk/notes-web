@@ -8,7 +8,7 @@ jobs:
     environment:
       _JAVA_OPTIONS: "-Xmx3g"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
-      GRAALVM_HOME: /home/circleci/repo/.graalvm
+      GRAALVM_HOME: /home/circleci/project/.graalvm
 
     steps:
       - checkout
